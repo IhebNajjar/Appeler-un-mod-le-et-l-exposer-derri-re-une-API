@@ -1,89 +1,29 @@
-# Guichet ML — Atelier 01 : Appeler un modèle et l'exposer derrière une API
+# Travaux Pratiques — Machine Learning Appliqué
+### 3e Année DSI · Institut Supérieur des Études Technologiques
 
-Première brique du Guichet ML : une API FastAPI qui reçoit un texte, identifie sa langue et renvoie une réponse normalisée (fournisseur simulé déterministe ou modèle Hugging Face distant).
-
----
-
-## Prérequis
-
-- Python 3.11 ou version ultérieure
-- Git
+Ce dépôt regroupe l'ensemble des ateliers pratiques de Machine Learning Appliqué :
 
 ---
 
-## Installation et démarrage
-
-### 1. Cloner le projet et créer l'environnement virtuel
-
-```bash
-# Sous Windows PowerShell :
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-# Si l'activation est refusée :
-# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-
-# Sous Linux ou macOS :
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-### 2. Installer les dépendances
-
-```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-### 3. Configurer l'environnement
-
-Créer le fichier `.env` à partir de `.env.example` :
-
-```bash
-# Windows PowerShell :
-Copy-Item .env.example .env
-
-# Linux / macOS :
-cp .env.example .env
-```
-
-Par défaut, `INFERENCE_MODE=mock`, ce qui permet d'exécuter l'application sans compte ni connexion Internet.
-
-### 4. Démarrer le serveur API
-
-```bash
-uvicorn app.main:app --reload
-```
-
-Le serveur est disponible sur :
-- **Documentation Swagger interactive** : [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Point de contrôle de santé** : [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
-
----
-
-## Exécuter les tests
-
-Les tests s'exécutent hors ligne avec :
-
-```bash
-pytest -q
-```
-
----
-
-## Structure du projet
+## 📂 Organisation du Dépôt
 
 ```text
-guichet-ml/
-├── app/
-│   ├── __init__.py
-│   ├── config.py       # Chargement des variables d'environnement
-│   ├── main.py         # Application FastAPI et routes (/health, /detect-language)
-│   ├── providers.py    # Fournisseur simulé (MockProvider) et Hugging Face (HfProvider)
-│   └── schemas.py      # Contrats de données Pydantic (Request, Response, Prediction)
-├── tests/
-│   └── test_api.py     # Tests unitaires automatisés
-├── .env.example        # Modèle des variables d'environnement (versionné)
-├── .gitignore          # Fichiers et dossiers ignorés (.venv, .env, __pycache__)
-├── requirements.txt    # Dépendances aux versions figées
-└── README.md           # Instructions d'installation et d'exécution
+├── guichet-ml/       # Atelier 1 — Inférence et API : Appeler un modèle et l'exposer derrière une API FastAPI
+└── atelier2/         # Atelier 2 — Choisir un modèle sur preuves : Benchmark & sélection de LLMs (Groq)
 ```
+
+---
+
+## 🔹 Atelier 1 : Guichet ML — Inférence et API
+- **Dossier** : [`guichet-ml/`](./guichet-ml/)
+- **Objectif** : Développement d'une API FastAPI recevant un texte, identifiant sa langue et renvoyant une réponse normalisée (fournisseur simulé déterministe ou modèle Hugging Face distant).
+- **Technologies** : Python, FastAPI, Pydantic, Pytest, Uvicorn, Hugging Face API.
+
+---
+
+## 🔹 Atelier 2 : Choisir un Modèle sur Preuves
+- **Dossier** : [`atelier2/`](./atelier2/)
+- **Objectif** : Évaluation rigoureuse et benchmark de 3 modèles de langage (`openai/gpt-oss-20b`, `openai/gpt-oss-120b`, `qwen/qwen3.8-27b`) sur 72 tickets clients avec comparaison des métriques (Accuracy, Macro-F1, matrice de confusion) et test d'une variante Few-shot.
+- **Technologies** : Python, Groq API, métriques manuelles sans boîte noire, JSON proofs.
+- **Résultats clés** : Le prompt engineering (Few-shot avec 4 exemples) surpasse l'impact de la taille du modèle en atteignant **0.970 de Macro-F1** (70/72 tickets corrects).
+- **Livrables** : Code source, 4 fichiers de résultats JSON, [Fiche de décision](./atelier2/fiche_de_decision.md) et captures d'écran.
